@@ -63,7 +63,7 @@ html,body{height:100%;background:var(--gray-bg);font-family:var(--font-body);col
 .log-entry{display:flex;gap:.6rem;padding:.45rem 0;border-bottom:1px solid var(--gray-light)}
 .log-entry:last-child{border-bottom:none}
 .log-who-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px}
-.log-who-dot.Papa{background:var(--blue-mid)}.log-who-dot.Mamá{background:var(--coral-mid)}
+.log-who-dot.Papa{background:var(--blue-mid)}.log-who-dot.Mamá{background:var(--coral-mid)}.log-who-dot.Abuela{background:var(--teal-mid)}
 .log-body .who{font-size:.8rem;font-weight:600;color:var(--ink)}
 .log-body .date{font-size:.74rem;color:var(--gray);margin-left:.35rem}
 .log-body .note{font-size:.8rem;color:var(--ink-soft);font-style:italic;margin-top:2px}
@@ -118,6 +118,7 @@ html,body{height:100%;background:var(--gray-bg);font-family:var(--font-body);col
 .who-btn{flex:1;padding:.7rem;border:2px solid var(--gray-light);border-radius:var(--radius-sm);font-size:.9rem;font-weight:600;font-family:var(--font-body);cursor:pointer;background:var(--white);color:var(--ink-soft);transition:all .15s}
 .who-btn.sel-papa{border-color:var(--blue-mid);background:var(--blue-bg);color:var(--blue-dark)}
 .who-btn.sel-mama{border-color:var(--coral-mid);background:var(--coral-bg);color:var(--coral-dark)}
+.who-btn.sel-abuela{border-color:var(--teal-mid);background:var(--teal-bg);color:var(--teal-dark)}
 .modal input,.modal textarea{width:100%;padding:.8rem 1rem;border:1.5px solid var(--gray-light);border-radius:var(--radius-sm);font-size:.9rem;font-family:var(--font-body);color:var(--ink);background:var(--white);margin-bottom:1rem}
 .modal textarea{min-height:80px;resize:none}
 .modal input:focus,.modal textarea:focus{outline:none;border-color:var(--purple-mid)}
@@ -205,6 +206,7 @@ html,body{height:100%;background:var(--gray-bg);font-family:var(--font-body);col
     <div class="who-row">
       <button class="who-btn" id="who-papa" onclick="pickWho('Papa')">👨 Papá</button>
       <button class="who-btn" id="who-mama" onclick="pickWho('Mamá')">👩 Mamá</button>
+      <button class="who-btn" id="who-abuela" onclick="pickWho('Abuela')">👵 Abuela</button>
     </div>
     <label>Nota (opcional)</label>
     <textarea id="log-note" placeholder="¿Cómo reaccionó? ¿Algo especial que quieras recordar?"></textarea>
@@ -223,6 +225,7 @@ html,body{height:100%;background:var(--gray-bg);font-family:var(--font-body);col
     <div class="who-row">
       <button class="who-btn" id="ach-who-papa" onclick="pickWhoAch('Papa')">👨 Papá</button>
       <button class="who-btn" id="ach-who-mama" onclick="pickWhoAch('Mamá')">👩 Mamá</button>
+      <button class="who-btn" id="ach-who-abuela" onclick="pickWhoAch('Abuela')">👵 Abuela</button>
     </div>
     <label>¿Qué logró?</label>
     <input type="text" id="ach-text" placeholder="Ej: Durmió solo por primera vez">
@@ -365,15 +368,17 @@ function openLogModal(id, title) {
   selectedWho  = null;
   document.getElementById('log-modal-title').textContent = title;
   document.getElementById('log-note').value = '';
-  document.getElementById('who-papa').className = 'who-btn';
-  document.getElementById('who-mama').className = 'who-btn';
+  document.getElementById('who-papa').className   = 'who-btn';
+  document.getElementById('who-mama').className   = 'who-btn';
+  document.getElementById('who-abuela').className = 'who-btn';
   openModal('log-modal');
 }
 
 function pickWho(who) {
   selectedWho = who;
-  document.getElementById('who-papa').className = 'who-btn' + (who === 'Papa' ? ' sel-papa' : '');
-  document.getElementById('who-mama').className = 'who-btn' + (who === 'Mamá' ? ' sel-mama' : '');
+  document.getElementById('who-papa').className   = 'who-btn' + (who === 'Papa'   ? ' sel-papa'   : '');
+  document.getElementById('who-mama').className   = 'who-btn' + (who === 'Mamá'   ? ' sel-mama'   : '');
+  document.getElementById('who-abuela').className = 'who-btn' + (who === 'Abuela' ? ' sel-abuela' : '');
 }
 
 async function saveLog() {
@@ -469,8 +474,9 @@ function selectDay(ds) {
 // ── ACHIEVEMENTS ───────────────────────────────────────────────────────────
 function pickWhoAch(who) {
   selectedWhoAch = who;
-  document.getElementById('ach-who-papa').className = 'who-btn' + (who === 'Papa' ? ' sel-papa' : '');
-  document.getElementById('ach-who-mama').className = 'who-btn' + (who === 'Mamá' ? ' sel-mama' : '');
+  document.getElementById('ach-who-papa').className   = 'who-btn' + (who === 'Papa'   ? ' sel-papa'   : '');
+  document.getElementById('ach-who-mama').className   = 'who-btn' + (who === 'Mamá'   ? ' sel-mama'   : '');
+  document.getElementById('ach-who-abuela').className = 'who-btn' + (who === 'Abuela' ? ' sel-abuela' : '');
 }
 
 async function saveAchievement() {
