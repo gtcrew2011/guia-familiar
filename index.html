@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan de Actividades — 30 Días</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --coral:#F0997B;--coral-bg:#FAECE7;--coral-dark:#7A2E15;--coral-mid:#D96E45;
+  --teal:#1D9E75;--teal-bg:#E1F5EE;--teal-dark:#0A4F38;--teal-mid:#2EBD8E;
+  --blue:#378ADD;--blue-bg:#E6F1FB;--blue-dark:#0C3D7A;--blue-mid:#5599E0;
+  --purple:#7F77DD;--purple-bg:#EEEDFE;--purple-dark:#2E2870;--purple-mid:#9B95E8;
+  --amber:#EF9F27;--amber-bg:#FAEEDA;--amber-dark:#6B4209;
+  --gray:#888780;--gray-bg:#F5F4F0;--gray-light:#E8E6DF;
+  --ink:#1C1B18;--ink-soft:#4A4843;--white:#FFFFFF;
+  --radius:14px;--radius-sm:8px;--shadow:0 2px 12px rgba(0,0,0,0.07);
+  --font-display:"Lora",Georgia,serif;--font-body:"DM Sans",system-ui,sans-serif;
+}
+
+body{font-family:var(--font-body);background:#FAFAF8;color:var(--ink);line-height:1.6}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(250,250,248,0.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--gray-light);padding:0 1.5rem}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:0;overflow-x:auto;scrollbar-width:none}
+.nav-inner::-webkit-scrollbar{display:none}
+.nav-tab{white-space:nowrap;padding:.9rem 1.1rem;font-size:.82rem;font-weight:500;color:var(--gray);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;text-decoration:none;display:block}
+.nav-tab:hover{color:var(--ink)}
+.nav-tab.active{color:var(--ink);border-bottom-color:var(--ink)}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#FFF8F5 0%,#F0F7FF 50%,#F5F0FF 100%);padding:4rem 1.5rem 3rem;text-align:center}
+.hero-eyebrow{display:inline-block;background:var(--teal-bg);color:var(--teal-dark);font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:.35rem .9rem;border-radius:20px;margin-bottom:1.2rem}
+.hero h1{font-family:var(--font-display);font-size:clamp(2rem,5vw,3rem);font-weight:600;color:var(--ink);line-height:1.2;margin-bottom:.8rem}
+.hero h1 em{font-style:italic;color:var(--teal)}
+.hero p{font-size:1.05rem;color:var(--ink-soft);max-width:520px;margin:0 auto 2rem}
+.hero-badges{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap}
+.badge{padding:.4rem .9rem;border-radius:20px;font-size:.8rem;font-weight:500}
+.badge-teal{background:var(--teal-bg);color:var(--teal-dark)}
+.badge-coral{background:var(--coral-bg);color:var(--coral-dark)}
+.badge-blue{background:var(--blue-bg);color:var(--blue-dark)}
+.badge-purple{background:var(--purple-bg);color:var(--purple-dark)}
+
+/* SECTIONS */
+.section{max-width:1100px;margin:0 auto;padding:3rem 1.5rem}
+.section-title{font-family:var(--font-display);font-size:1.6rem;font-weight:600;color:var(--ink);margin-bottom:.4rem}
+.section-sub{color:var(--ink-soft);font-size:.95rem;margin-bottom:2rem}
+
+/* WEEK FILTER */
+.week-filter{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2rem}
+.wf-btn{padding:.45rem 1rem;border:1.5px solid var(--gray-light);border-radius:20px;font-size:.82rem;font-weight:500;cursor:pointer;background:var(--white);color:var(--ink-soft);transition:all .18s;font-family:var(--font-body)}
+.wf-btn:hover{border-color:var(--gray);color:var(--ink)}
+.wf-btn.active{background:var(--ink);color:var(--white);border-color:var(--ink)}
+
+/* CARDS GRID */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.1rem}
+.card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--gray-light);overflow:hidden;transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.1)}
+.card.hidden{display:none}
+
+.card-header{padding:1rem 1.1rem .8rem;position:relative}
+.card-header.teal{background:var(--teal-mid)}
+.card-header.coral{background:var(--coral-mid)}
+.card-header.blue{background:var(--blue-mid)}
+.card-header.purple{background:var(--purple-mid)}
+
+.card-day{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.9);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:1rem;color:var(--ink);margin-bottom:.55rem}
+.card-title{font-family:var(--font-display);font-size:1.15rem;font-weight:600;color:var(--white);line-height:1.3;margin-bottom:.5rem}
+.card-pills{display:flex;gap:.4rem;flex-wrap:wrap}
+.card-pill{font-size:.82rem;font-weight:600;padding:.25rem .7rem;border-radius:10px;background:rgba(255,255,255,0.2);color:var(--white)}
+
+.card-body{padding:1rem 1.2rem;flex:1;display:flex;flex-direction:column;gap:.75rem}
+.card-text{font-size:1rem;color:var(--ink-soft);line-height:1.7}
+.card-tag{align-self:flex-start;font-size:.82rem;font-weight:600;padding:.3rem .8rem;border-radius:10px;margin-top:auto}
+.card-tag.teal{background:var(--teal-bg);color:var(--teal-dark)}
+.card-tag.coral{background:var(--coral-bg);color:var(--coral-dark)}
+.card-tag.blue{background:var(--blue-bg);color:var(--blue-dark)}
+.card-tag.purple{background:var(--purple-bg);color:var(--purple-dark)}
+
+/* GUIDES */
+.guide-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.5rem;margin-bottom:2rem}
+.guide-card{background:var(--white);border-radius:var(--radius);border:1px solid var(--gray-light);overflow:hidden;box-shadow:var(--shadow)}
+.guide-header{padding:1.4rem 1.4rem 1rem}
+.guide-header.teal{background:var(--teal-bg);border-bottom:3px solid var(--teal-mid)}
+.guide-header.coral{background:var(--coral-bg);border-bottom:3px solid var(--coral-mid)}
+.guide-header.blue{background:var(--blue-bg);border-bottom:3px solid var(--blue-mid)}
+.guide-header.purple{background:var(--purple-bg);border-bottom:3px solid var(--purple-mid)}
+.guide-who{font-size:.72rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;margin-bottom:.3rem}
+.guide-who.teal{color:var(--teal-dark)}
+.guide-who.coral{color:var(--coral-dark)}
+.guide-who.blue{color:var(--blue-dark)}
+.guide-who.purple{color:var(--purple-dark)}
+.guide-title{font-family:var(--font-display);font-size:1.15rem;font-weight:600;color:var(--ink)}
+.guide-sub{font-size:.83rem;color:var(--ink-soft);margin-top:.25rem}
+.guide-body{padding:1.2rem 1.4rem}
+.tip-item{margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid var(--gray-light)}
+.tip-item:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
+.tip-title{font-weight:600;font-size:.88rem;color:var(--ink);margin-bottom:.25rem}
+.tip-text{font-size:.83rem;color:var(--ink-soft);line-height:1.6}
+
+/* OPOL TABLE */
+.opol-table{width:100%;border-collapse:separate;border-spacing:0;border-radius:var(--radius-sm);overflow:hidden;border:1px solid var(--gray-light);margin:1.5rem 0;font-size:.85rem}
+.opol-table th{background:var(--gray-bg);padding:.7rem 1rem;text-align:left;font-weight:600;color:var(--ink-soft);font-size:.78rem;text-transform:uppercase;letter-spacing:.05em}
+.opol-table td{padding:.8rem 1rem;border-top:1px solid var(--gray-light);vertical-align:middle}
+.opol-table tr:hover td{background:#FAFAF8}
+
+/* CALLOUT */
+.callout{border-radius:var(--radius-sm);padding:1rem 1.2rem;margin:1.2rem 0;font-size:.88rem;line-height:1.65}
+.callout.teal{background:var(--teal-bg);border-left:3px solid var(--teal-mid);color:var(--teal-dark)}
+.callout.coral{background:var(--coral-bg);border-left:3px solid var(--coral-mid);color:var(--coral-dark)}
+.callout.blue{background:var(--blue-bg);border-left:3px solid var(--blue-mid);color:var(--blue-dark)}
+.callout.purple{background:var(--purple-bg);border-left:3px solid var(--purple-mid);color:var(--purple-dark)}
+.callout.amber{background:var(--amber-bg);border-left:3px solid var(--amber);color:var(--amber-dark)}
+.callout strong{font-weight:600;display:block;margin-bottom:.3rem}
+
+/* PHRASES */
+.phrase-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:.9rem;margin:1.2rem 0}
+.phrase-card{background:var(--blue-bg);border-radius:var(--radius-sm);padding:.9rem 1rem}
+.phrase-moment{font-size:.72rem;font-weight:600;color:var(--blue-dark);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.5rem}
+.phrase-list{list-style:none}
+.phrase-list li{font-size:.85rem;color:var(--ink);padding:.18rem 0;font-style:italic}
+.phrase-list li::before{content:"→ ";color:var(--blue-mid);font-style:normal}
+
+/* LANG TABLE */
+.lang-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;margin:1.2rem 0}
+.lang-card{background:var(--white);border:1px solid var(--gray-light);border-radius:var(--radius-sm);padding:1rem;transition:box-shadow .2s}
+.lang-card:hover{box-shadow:var(--shadow)}
+.lang-name{font-family:var(--font-display);font-size:1.1rem;font-weight:600;color:var(--ink);margin-bottom:.4rem}
+.lang-diff{display:inline-block;font-size:.7rem;font-weight:600;padding:.2rem .6rem;border-radius:8px;margin-bottom:.6rem}
+.lang-diff.easy{background:var(--teal-bg);color:var(--teal-dark)}
+.lang-diff.medium{background:var(--amber-bg);color:var(--amber-dark)}
+.lang-diff.hard{background:#FCE8E8;color:#7A2020}
+.lang-desc{font-size:.82rem;color:var(--ink-soft);line-height:1.6}
+
+/* FOOTER */
+footer{background:var(--gray-bg);border-top:1px solid var(--gray-light);padding:2rem 1.5rem;text-align:center;margin-top:3rem}
+footer p{font-size:.82rem;color:var(--gray);font-family:var(--font-display);font-style:italic}
+
+/* SLEEP TRANSITION */
+.week-timeline{display:flex;flex-direction:column;gap:1rem;margin:1.5rem 0}
+.timeline-week{display:grid;grid-template-columns:90px 1fr;gap:1rem;align-items:start}
+.tl-badge{display:flex;flex-direction:column;align-items:center;gap:4px}
+.tl-num{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:.85rem;color:var(--white);flex-shrink:0}
+.tl-label{font-size:.68rem;font-weight:600;text-align:center;color:var(--ink-soft);line-height:1.3}
+.tl-line{width:2px;height:20px;margin:0 auto;background:var(--gray-light)}
+.tl-card{background:var(--white);border:1px solid var(--gray-light);border-radius:var(--radius-sm);padding:.9rem 1.1rem}
+.tl-title{font-weight:600;font-size:.92rem;color:var(--ink);margin-bottom:.3rem}
+.tl-body{font-size:.84rem;color:var(--ink-soft);line-height:1.65}
+.tl-tip{font-size:.78rem;margin-top:.5rem;padding:.4rem .7rem;border-radius:6px;background:var(--gray-bg);color:var(--ink-soft)}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:.6rem;margin:1rem 0}
+.checklist li{display:flex;align-items:flex-start;gap:.75rem;font-size:.88rem;color:var(--ink-soft);line-height:1.55}
+.check-icon{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;flex-shrink:0;margin-top:.1rem}
+.check-now{background:var(--teal-bg);color:var(--teal-dark)}
+.check-week{background:var(--blue-bg);color:var(--blue-dark)}
+.check-later{background:var(--amber-bg);color:var(--amber-dark)}
+.adult-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin:1.2rem 0}
+.adult-card{border-radius:var(--radius-sm);padding:1.1rem 1.2rem;border:1px solid transparent}
+.adult-card.abuela{background:var(--teal-bg);border-color:var(--teal-mid)}
+.adult-card.mama{background:var(--coral-bg);border-color:var(--coral-mid)}
+.adult-card.papa{background:var(--blue-bg);border-color:var(--blue-mid)}
+.adult-who{font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.4rem}
+.adult-who.teal{color:var(--teal-dark)}
+.adult-who.coral{color:var(--coral-dark)}
+.adult-who.blue{color:var(--blue-dark)}
+.adult-rules{list-style:none;display:flex;flex-direction:column;gap:.45rem;margin-top:.6rem}
+.adult-rules li{font-size:.83rem;color:var(--ink-soft);line-height:1.55;padding-left:1rem;position:relative}
+.adult-rules li::before{content:"→";position:absolute;left:0;color:var(--gray)}
+@media print{
+  nav,footer,.week-filter{display:none}
+  .card{break-inside:avoid;box-shadow:none;border:1px solid #ddd}
+  .section{padding:1rem 0}
+  body{font-size:11px}
+}
+
+/* SCROLL REVEAL */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.reveal{animation:fadeUp .45s ease both}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-tab active" href="#actividades" onclick="setTab(this,'actividades')">30 Actividades</a>
+    <a class="nav-tab" href="#bilingue" onclick="setTab(this,'bilingue')">Crianza Bilingüe</a>
+    <a class="nav-tab" href="#papa" onclick="setTab(this,'papa')">Guía de Papá</a>
+    <a class="nav-tab" href="#terceridioma" onclick="setTab(this,'terceridioma')">Tercer Idioma</a>
+    <a class="nav-tab" href="#mama" onclick="setTab(this,'mama')">Guía de Mamá</a>
+    <a class="nav-tab" href="#abuela" onclick="setTab(this,'abuela')">Guía de Abuela</a>
+    <a class="nav-tab" href="#sueno" onclick="setTab(this,'sueno')">🌙 Transición de Sueño</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">2 años · 3 meses</div>
+  <h1>Plan familiar de<br><em>actividades</em> y crianza</h1>
+  <p>30 días de juego, lenguaje y conexión — para papá, mamá y abuela</p>
+  <div class="hero-badges">
+    <span class="badge badge-teal">Con abuela</span>
+    <span class="badge badge-coral">Con mamá</span>
+    <span class="badge badge-blue">Con papá</span>
+    <span class="badge badge-purple">Toda la familia</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════ 30 ACTIVITIES ═══════════════════════ -->
+<section id="actividades" class="section">
+  <div class="section-title">Las 30 actividades</div>
+  <div class="section-sub">Selecciona una semana o filtra por quién la realiza</div>
+
+  <div class="week-filter">
+    <button class="wf-btn active" onclick="filterCards('all',this)">Todas</button>
+    <button class="wf-btn" onclick="filterCards('semana-1',this)">Semana 1 — Los sentidos</button>
+    <button class="wf-btn" onclick="filterCards('semana-2',this)">Semana 2 — El movimiento</button>
+    <button class="wf-btn" onclick="filterCards('semana-3',this)">Semana 3 — Las palabras</button>
+    <button class="wf-btn" onclick="filterCards('semana-4',this)">Semana 4 — Crear y celebrar</button>
+    <button class="wf-btn" onclick="filterCards('abuela',this)">Con abuela</button>
+    <button class="wf-btn" onclick="filterCards('papa',this)">Con papá</button>
+    <button class="wf-btn" onclick="filterCards('mama',this)">Con mamá</button>
+    <button class="wf-btn" onclick="filterCards('familia',this)">Toda la familia</button>
+  </div>
+
+  <div class="cards-grid" id="cards-container">
+  </div>
+</section>
+
+<!-- ═══════════════════════ BILINGUAL GUIDE ═══════════════════════ -->
+<section id="bilingue" class="section">
+  <div class="section-title">Crianza bilingüe sin saturar</div>
+  <div class="section-sub">Español + Inglés desde los 2 años — el método que funciona</div>
+
+  <div class="callout purple">
+    <strong>El niño bilingüe NO se confunde.</strong>
+    Lo que parece "confusión" — mezclar palabras de ambos idiomas en una misma frase — se llama <em>code-switching</em> y es una señal de competencia bilingüe, no de problema. El riesgo real no es confusión: es input insuficiente en uno de los dos idiomas.
+  </div>
+
+  <h3 style="font-family:var(--font-display);font-size:1.1rem;margin:1.8rem 0 .8rem;color:var(--ink)">El método OPOL — Un adulto, un idioma</h3>
+  <p style="font-size:.9rem;color:var(--ink-soft);margin-bottom:1rem">Cada persona habla <strong>siempre</strong> su idioma con el niño. No hay que ser rígidos al 100%, pero sí consistentes al 80–90%. El niño aprende rápido las "reglas" de cada relación.</p>
+
+  <table class="opol-table">
+    <thead><tr><th>Persona</th><th>Idioma</th><th>Rol</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="badge badge-teal" style="font-size:.78rem">Abuela</span></td>
+        <td style="font-weight:600;color:var(--teal-dark)">Español</td>
+        <td style="font-size:.85rem;color:var(--ink-soft)">Todo el día — ya lo hace naturalmente. Base emocional del idioma.</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-coral" style="font-size:.78rem">Mamá</span></td>
+        <td style="font-weight:600;color:var(--coral-dark)">Español</td>
+        <td style="font-size:.85rem;color:var(--ink-soft)">Refuerza con la abuela. Español rico y emocional — no hay presión de inglés.</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-blue" style="font-size:.78rem">Papá</span></td>
+        <td style="font-weight:600;color:var(--blue-dark)">Inglés</td>
+        <td style="font-size:.85rem;color:var(--ink-soft)">Puente principal al segundo idioma. Habla inglés siempre con el niño.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout teal">
+    <strong>La regla de oro: consistencia de persona, no de lugar.</strong>
+    No importa dónde estén. Lo que importa es quién habla. Papá habla inglés al niño en el parque, en casa, en el carro. Siempre. Esa consistencia construye el idioma.
+  </div>
+
+  <div class="callout amber">
+    <strong>¿Cuánta exposición necesita el inglés?</strong>
+    Para que un idioma se consolide, el niño necesita escucharlo al menos el 30% del tiempo total de su día. Con la abuela en casa hablando español todo el día, ese idioma ya tiene su base asegurada. El trabajo de papá es construir la base del inglés con la misma solidez.
+  </div>
+</section>
+
+<!-- ═══════════════════════ PAPA GUIDE ═══════════════════════ -->
+<section id="papa" class="section">
+  <div class="section-title">Guía de papá — Inglés con tu hijo</div>
+  <div class="section-sub">Tu ventaja: eres el idioma de la aventura y el movimiento</div>
+
+  <div class="callout blue">
+    <strong>Para tu hijo, papá es sinónimo de juego físico y exploración.</strong>
+    Ese contexto emocional es exactamente donde el inglés se va a grabar más profundo. No necesitas "enseñar" — solo habla. El idioma se transfiere con la emoción del momento.
+  </div>
+
+  <h3 style="font-family:var(--font-display);font-size:1.1rem;margin:1.8rem 0 .8rem;color:var(--ink)">Frases para usar todos los días — sin preparación</h3>
+  <div class="phrase-grid">
+    <div class="phrase-card">
+      <div class="phrase-moment">Al despertar</div>
+      <ul class="phrase-list">
+        <li>Good morning, buddy!</li>
+        <li>Did you sleep well?</li>
+        <li>Time to wake up!</li>
+      </ul>
+    </div>
+    <div class="phrase-card">
+      <div class="phrase-moment">En el desayuno</div>
+      <ul class="phrase-list">
+        <li>Are you hungry?</li>
+        <li>What do you want to eat?</li>
+        <li>Mmm, this is yummy!</li>
+      </ul>
+    </div>
+    <div class="phrase-card">
+      <div class="phrase-moment">Jugando</div>
+      <ul class="phrase-list">
+        <li>Let's play!</li>
+        <li>Wow, look at that!</li>
+        <li>Again? Okay, one more time!</li>
+      </ul>
+    </div>
+    <div class="phrase-card">
+      <div class="phrase-moment">En el parque</div>
+      <ul class="phrase-list">
+        <li>Run! Fast! Faster!</li>
+        <li>Jump! You can do it!</li>
+        <li>Do you see the dog?</li>
+      </ul>
+    </div>
+    <div class="phrase-card">
+      <div class="phrase-moment">Al bañarse</div>
+      <ul class="phrase-list">
+        <li>Soap! Bubbles! Rub rub!</li>
+        <li>Wash your hair, your arms...</li>
+        <li>All clean! Good job!</li>
+      </ul>
+    </div>
+    <div class="phrase-card">
+      <div class="phrase-moment">Al dormir</div>
+      <ul class="phrase-list">
+        <li>Time for bed.</li>
+        <li>I love you so much.</li>
+        <li>Goodnight, my boy.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="font-family:var(--font-display);font-size:1.1rem;margin:1.8rem 0 .8rem;color:var(--ink)">Actividades específicas en inglés — 10 minutos</h3>
+  <div class="guide-grid">
+    <div class="guide-card">
+      <div class="guide-header blue">
+        <div class="guide-who blue">Clásico</div>
+        <div class="guide-title">Simon Says</div>
+        <div class="guide-sub">Vocabulario corporal sin esfuerzo</div>
+      </div>
+      <div class="guide-body">
+        <p class="tip-text">"Simon says touch your nose! Simon says jump! Simon says clap!" El clásico de todos los tiempos. Desarrolla escucha activa y vocabulario corporal. No necesita entender cada palabra — el contexto lo enseña.</p>
+      </div>
+    </div>
+    <div class="guide-card">
+      <div class="guide-header blue">
+        <div class="guide-who blue">Exploración</div>
+        <div class="guide-title">Color Hunt</div>
+        <div class="guide-sub">Colores en contexto real</div>
+      </div>
+      <div class="guide-body">
+        <p class="tip-text">"Find something RED. Find something BLUE." Recorren la casa buscando objetos del color que dices. Celebra cada hallazgo: "Yes! That's red! Great job!" Movimiento + inglés + colores en un solo juego.</p>
+      </div>
+    </div>
+    <div class="guide-card">
+      <div class="guide-header blue">
+        <div class="guide-who blue">Rutina diaria</div>
+        <div class="guide-title">Bath time narration</div>
+        <div class="guide-sub">El mejor aula sin costo</div>
+      </div>
+      <div class="guide-body">
+        <p class="tip-text">El baño es el mejor aula. Nombra todo: "Water — hot or cold? Soap. Bubbles! Wash your hair, wash your arms, wash your tummy." Repetición diaria en contexto real — se graba solo.</p>
+      </div>
+    </div>
+    <div class="guide-card">
+      <div class="guide-header blue">
+        <div class="guide-who blue">Matemáticas</div>
+        <div class="guide-title">Counting everything</div>
+        <div class="guide-sub">Números sin que se sienta lección</div>
+      </div>
+      <div class="guide-body">
+        <p class="tip-text">Cuenta en inglés todo lo que encuentren: escalones, uvas, bloques. "One, two, three..." El niño aprende los números en inglés sin que se sienta como una lección. Hacerlo en el carro o caminando.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ THIRD LANGUAGE ═══════════════════════ -->
+<section id="terceridioma" class="section">
+  <div class="section-title">El tercer idioma — una inversión de por vida</div>
+  <div class="section-sub">Cómo aprenderlo junto a tu hijo sin saturarlo</div>
+
+  <div class="callout purple">
+    <strong>Los niños que ven a un adulto aprender un idioma desarrollan actitudes más abiertas hacia los idiomas para siempre.</strong>
+    No tienes que "enseñarle" el tercer idioma a tu hijo — solo aprenderlo en voz alta. Él absorbe palabras, canciones y frases como regalo extra, sin ninguna presión ni expectativa. A los 2 años, cualquier exposición se almacena. A los 15, lo agradecerá.
+  </div>
+
+  <h3 style="font-family:var(--font-display);font-size:1.1rem;margin:1.8rem 0 .8rem;color:var(--ink)">¿Qué idioma elegir? — comparación para tu perfil</h3>
+  <div class="lang-grid">
+    <div class="lang-card">
+      <div class="lang-name">Portugués</div>
+      <span class="lang-diff easy">Fácil</span>
+      <p class="lang-desc">70% de vocabulario compartido con el español. Brasil es el mayor mercado de habla no inglesa en las Américas. Listo para conversación básica en 4–6 meses. La opción de menor fricción para alguien con base en español.</p>
+    </div>
+    <div class="lang-card">
+      <div class="lang-name">Francés</div>
+      <span class="lang-diff medium">Medio</span>
+      <p class="lang-desc">Segundo idioma del mundo por distribución geográfica. Útil en Canadá, África, Europa. Comparte raíces con el español. Más difícil que el portugués pero con enorme alcance cultural e institucional.</p>
+    </div>
+    <div class="lang-card">
+      <div class="lang-name">Mandarín</div>
+      <span class="lang-diff hard">Difícil</span>
+      <p class="lang-desc">El idioma del siglo XXI según muchos economistas. Curva de aprendizaje alta para hablantes de español. Requiere compromiso serio — 2–3 años para nivel funcional básico. Inversión a muy largo plazo.</p>
+    </div>
+    <div class="lang-card">
+      <div class="lang-name">Alemán</div>
+      <span class="lang-diff medium">Medio-difícil</span>
+      <p class="lang-desc">Idioma técnico por excelencia — ingeniería, manufactura avanzada, precisión. Útil si la trayectoria profesional apunta hacia manufactura de precisión o ingeniería europea. Bien valorado en el sector industrial.</p>
+    </div>
+  </div>
+
+  <div class="callout teal">
+    <strong>Cómo introducirlo al niño — sin presión, con juego</strong>
+    1. Una palabra nueva por semana. Solo una. Úsala con el niño en contexto natural.<br>
+    2. Una canción en ese idioma. Las canciones se graban antes que las palabras.<br>
+    3. Cuando estudias, deja que te vea. Aprender en voz alta es modelar el hábito.<br>
+    4. Nunca lo evalúes ni lo corrijas en el tercer idioma. Solo exposición, solo juego.
+  </div>
+</section>
+
+<!-- ═══════════════════════ MAMA GUIDE ═══════════════════════ -->
+<section id="mama" class="section">
+  <div class="section-title">Guía de mamá — Español profundo y conexión</div>
+  <div class="section-sub">Tu idioma es su primer hogar emocional</div>
+
+  <div class="callout coral">
+    <strong>Tu rol no es enseñarlo en inglés — es enraizarlo en español.</strong>
+    El español profundo, rico y emocionalmente conectado es la base sobre la que el inglés se va a construir. Un niño con español sólido aprende inglés más rápido y mejor que uno con dos idiomas débiles. Tu trabajo es hablarle con vocabulario rico, contarle cuentos, nombrar emociones. Eso es el cimiento.
+  </div>
+
+  <div class="guide-grid">
+    <div class="guide-card">
+      <div class="guide-header coral">
+        <div class="guide-who coral">Rutina diaria</div>
+        <div class="guide-title">Narrar el día en voz alta</div>
+      </div>
+      <div class="guide-body">
+        <p class="tip-text">Mientras hacen cualquier actividad, narra lo que está pasando: "Ahora vamos a lavar las manos. El agua está tibia. Frotas el jabón, miras las burbujas..." Vocabulario en contexto real — lo más poderoso que existe.</p>
+      </div>
+    </div>
+    <div class="guide-card">
+      <div class="guide-header coral">
+        <div class="guide-who coral">Emociones</div>
+        <div class="guide-title">Libro de emociones con fotos</div>
+      </div>
+      <div class="guide-body">
+        <p class="tip-text">Recorten de revistas o impriman caras con distintas emociones. Repásenlas juntos: "Esta señora está triste. Mira sus ojos. Tú, ¿cuándo te sientes triste?" Inteligencia emocional construida en español desde temprano.</p>
+      </div>
+    </div>
+    <div class="guide-card">
+      <div class="guide-header coral">
+        <div class="guide-who coral">Arte y cultura</div>
+        <div class="guide-title">Canciones con historia</div>
+      </div>
+      <div class="guide-body">
+        <p class="tip-text">No solo canciones infantiles — canciones que a ti te gusten y que tengan historia. El gusto musical de mamá se transmite. Bailar juntos mientras explicas de qué habla la canción. La música es vocabulario emocional.</p>
+      </div>
+    </div>
+    <div class="guide-card">
+      <div class="guide-header coral">
+        <div class="guide-who coral">Vida cotidiana</div>
+        <div class="guide-title">Cocinar y nombrar todo</div>
+      </div>
+      <div class="guide-body">
+        <p class="tip-text">La cocina es el mejor salón de clases. Todo tiene nombre: cuchara, tazón, mezclar, hervir, frío, caliente. El niño que aprende vocabulario de cocina con mamá tiene ventaja semántica real a los 5 años.</p>
+      </div>
+    </div>
+    <div class="guide-card">
+      <div class="guide-header coral">
+        <div class="guide-who coral">Imaginación</div>
+        <div class="guide-title">Cuento inventado antes de dormir</div>
+      </div>
+      <div class="guide-body">
+        <p class="tip-text">Inventar cuentos donde el niño es el héroe: "Había una vez un niño valiente que se llamaba..." El niño pide el mismo cuento muchas veces. Eso es aprendizaje, no aburrimiento — así se construye la memoria narrativa.</p>
+      </div>
+    </div>
+    <div class="guide-card">
+      <div class="guide-header coral">
+        <div class="guide-who coral">Regulación emocional</div>
+        <div class="guide-title">Validar emociones en español</div>
+      </div>
+      <div class="guide-body">
+        <p class="tip-text">Cuando el niño esté frustrado, triste o enojado, nombra la emoción: "Estás enojado porque se acabó el juego. Es normal estar enojado. Respira conmigo." Esto es regulación emocional — el regalo más duradero.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout amber">
+    <strong>Una nota honesta sobre el inglés y mamá</strong>
+    No hay ninguna presión de hablar inglés con tu hijo. Si lo haces con fluidez natural, adelante. Pero si sientes que no es tu idioma más fuerte, hablar español rico es muchísimo mejor que inglés forzado. Los niños detectan la incomodidad del adulto y eso afecta su relación con ese idioma.
+  </div>
+</section>
+
+<!-- ═══════════════════════ ABUELA GUIDE ═══════════════════════ -->
+<section id="abuela" class="section">
+  <div class="section-title">Guía de abuela</div>
+  <div class="section-sub">No necesitas preparación — solo estar presente</div>
+
+  <div class="callout teal">
+    <strong>Tu voz, tus canciones y tus historias son el material más valioso de todo este plan.</strong>
+    Las actividades marcadas "Con abuela" son las más simples y naturales. No necesitas materiales ni preparación. Lo que el niño necesita de ti no se puede comprar ni descargar.
+  </div>
+
+  <div class="guide-grid">
+    <div class="guide-card">
+      <div class="guide-header teal">
+        <div class="guide-who teal">Para saber</div>
+        <div class="guide-title">La repetición es el punto</div>
+      </div>
+      <div class="guide-body">
+        <p class="tip-text">Si el niño quiere la misma canción o el mismo juego todos los días, es señal de que está aprendiendo. Repetir es como los niños pequeños dominan algo nuevo. No hay que buscar variedad por variedad.</p>
+      </div>
+    </div>
+    <div class="guide-card">
+      <div class="guide-header teal">
+        <div class="guide-who teal">Para saber</div>
+        <div class="guide-title">Habla siempre, aunque él no responda</div>
+      </div>
+      <div class="guide-body">
+        <p class="tip-text">Di el nombre de todo lo que ves: colores, objetos, lo que estás haciendo. "Esto es una cuchara, es de metal, está fría." El niño absorbe todo aunque no lo repita todavía. Cada palabra que escucha se está guardando.</p>
+      </div>
+    </div>
+    <div class="guide-card">
+      <div class="guide-header teal">
+        <div class="guide-who teal">Para saber</div>
+        <div class="guide-title">Terminar siempre en un punto positivo</div>
+      </div>
+      <div class="guide-body">
+        <p class="tip-text">Si el niño se aburre o llora, para la actividad gentilmente. Nunca fuerces. Di: "Jugamos después." El objetivo es que asocie el juego contigo con algo agradable. Esa asociación dura toda la vida.</p>
+      </div>
+    </div>
+    <div class="guide-card">
+      <div class="guide-header teal">
+        <div class="guide-who teal">Tu superpoder</div>
+        <div class="guide-title">Tus cuentos son insustituibles</div>
+      </div>
+      <div class="guide-body">
+        <p class="tip-text">No necesitas un libro. Cuenta cuentos de tu infancia, de animales, inventados. La voz de la abuela contando historias es un regalo que el niño guardará toda la vida. Nadie más puede dárselo.</p>
+      </div>
+    </div>
+    <div class="guide-card">
+      <div class="guide-header teal">
+        <div class="guide-who teal">Tu superpoder</div>
+        <div class="guide-title">El álbum familiar hablado</div>
+      </div>
+      <div class="guide-body">
+        <p class="tip-text">Saca fotos familiares — físicas o en el teléfono. Señala personas: "Este es tu papá cuando era chiquito." El niño aprende nombres de familiares y construye identidad. Eres la única que puede hacer esto.</p>
+      </div>
+    </div>
+    <div class="guide-card">
+      <div class="guide-header teal">
+        <div class="guide-who teal">Para recordar</div>
+        <div class="guide-title">No hay que hacerlo perfecto</div>
+      </div>
+      <div class="guide-body">
+        <p class="tip-text">Lo que el niño necesita es tu presencia y tu amor. El resto — colores, formas, palabras — viene solo con el tiempo. Si un día no tienes energía para una actividad, solo estar juntos ya es suficiente.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Plan mensual de actividades · Niño de 2 años y 3 meses · Español + Inglés</p>
+</footer>
+
+<!-- ═══════════════════════ SLEEP TRANSITION ═══════════════════════ -->
+<section id="sueno" class="section">
+  <div class="section-title">🌙 Transición de sueño</div>
+  <div class="section-sub">De la cama compartida a dormir solo — sin trauma, sin llorar solo</div>
+
+  <!-- PHILOSOPHY CARD -->
+  <div style="background:linear-gradient(135deg,#1A1D3A,#3D4580);border-radius:var(--radius);padding:1.8rem;margin-bottom:2rem;color:white">
+    <div style="font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#9B95E8;margin-bottom:.8rem">Para leer cuando la transición se sienta difícil</div>
+    <div style="font-family:var(--font-display);font-size:1.2rem;font-weight:600;margin-bottom:1rem;line-height:1.3">¿Estábamos equivocados en dormir con él?<br><em style="color:#9B95E8">No. Y tampoco completamente en lo correcto.</em></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem">
+      <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:1rem">
+        <div style="font-size:.75rem;font-weight:600;color:#6B75CC;text-transform:uppercase;margin-bottom:.5rem">Lo que construyeron ✓</div>
+        <p style="font-size:.83rem;color:#C8CCEE;line-height:1.6">El colecho tiene respaldo científico real. Un niño que duerme con sus padres en los primeros años desarrolla un <strong style="color:white">apego seguro más robusto</strong> — el predictor más fuerte de salud mental adulta. Niveles de cortisol más bajos. Más oxitocina. Más vínculo. Hicieron bien.</p>
+      </div>
+      <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:1rem">
+        <div style="font-size:.75rem;font-weight:600;color:#6B75CC;text-transform:uppercase;margin-bottom:.5rem">Lo que ahora necesita ✓</div>
+        <p style="font-size:.83rem;color:#C8CCEE;line-height:1.6">A los 2 años su cerebro está en <strong style="color:white">individuación</strong> — aprender que es una persona separada. Eso requiere práctica nocturna. Sin oportunidad de regularse solo, el cerebro no construye esas rutas. El costo aparece a los 4–6 años: ansiedad de separación, primer día de escuela difícil.</p>
+      </div>
+    </div>
+    <div style="background:rgba(245,230,66,0.12);border:1px solid rgba(245,230,66,0.3);border-radius:10px;padding:1rem">
+      <p style="font-size:.88rem;color:#F5E642;font-weight:500;margin-bottom:.4rem">La distinción que importa:</p>
+      <p style="font-size:.83rem;color:#C8CCEE;line-height:1.6">Hay <strong style="color:white">dependencia desde la seguridad</strong> — el niño que duerme con sus padres porque el vínculo es fuerte y cuando llegue el momento tiene la base para separarse bien. Y hay <strong style="color:white">dependencia desde la ansiedad</strong> — el niño que no puede separarse porque nunca tuvo la oportunidad de descubrir que puede estar solo y estar bien. La transición gradual convierte la primera en la segunda. No están abandonando la filosofía del apego — están en el siguiente capítulo de ella.</p>
+    </div>
+    <p style="font-size:.8rem;color:#9B95E8;margin-top:1rem;font-style:italic">Están en el momento ideal. A los 2 años el cerebro es suficientemente maduro para aprender y suficientemente plástico para hacerlo sin trauma. A los 4 años es más difícil. El vínculo que construyeron ES la base desde la que él puede aprender a separarse con seguridad.</p>
+  </div>
+
+  <h3 style="font-family:var(--font-display);font-size:1.1rem;margin:1.8rem 0 .6rem;color:var(--ink)">La situación real de cada espacio</h3>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:.9rem;margin-bottom:1.5rem">
+    <div style="background:var(--blue-bg);border-radius:var(--radius-sm);padding:1rem;border:1px solid var(--blue-mid)">
+      <div style="font-size:.72rem;font-weight:600;color:var(--blue-dark);text-transform:uppercase;margin-bottom:.4rem">Cuarto de papá y mamá</div>
+      <ul style="list-style:none;font-size:.83rem;color:var(--ink-soft);display:flex;flex-direction:column;gap:.3rem">
+        <li>🛏️ Colchón de papá y mamá en el piso</li>
+        <li>🛏️ Toddler bed a nivel del piso (nuevo Linenspa)</li>
+        <li>🌬️ Coway Airmega — ruido blanco disponible</li>
+        <li>🪟 Cortinas blackout ordenadas — en camino</li>
+        <li>💤 <strong>Aquí ocurre la transición nocturna</strong></li>
+      </ul>
+    </div>
+    <div style="background:var(--teal-bg);border-radius:var(--radius-sm);padding:1rem;border:1px solid var(--teal-mid)">
+      <div style="font-size:.72rem;font-weight:600;color:var(--teal-dark);text-transform:uppercase;margin-bottom:.4rem">Cuarto de la abuela</div>
+      <ul style="list-style:none;font-size:.83rem;color:var(--ink-soft);display:flex;flex-direction:column;gap:.3rem">
+        <li>🛏️ Cama alta de la abuela</li>
+        <li>📵 Sin Coway — usar app de ruido blanco en el teléfono</li>
+        <li>🪟 Sin cortinas blackout — sábana oscura temporal</li>
+        <li>😴 <strong>Aquí ocurre la siesta</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="font-family:var(--font-display);font-size:1.1rem;margin:1.8rem 0 .6rem;color:var(--ink)">Paso 1 — Preparar el ambiente</h3>
+  <ul class="checklist">
+    <li>
+      <div class="check-icon check-now">✅</div>
+      <div><strong style="color:var(--ink)">Cortinas blackout — en camino.</strong> Cuando lleguen, instalarlas de forma que cubran también los bordes laterales y superiores. El borde azul que se filtraba bloqueaba la melatonina completamente.</div>
+    </li>
+    <li>
+      <div class="check-icon check-now">🌬️</div>
+      <div><strong style="color:var(--ink)">Hoy — Coway en nivel 1 o 2 toda la noche.</strong> 40–50 dB de ruido blanco constante. Encenderlo 10 minutos antes del ritual. Mismo nivel siempre — la constancia es la señal.</div>
+    </li>
+    <li>
+      <div class="check-icon check-now">📱</div>
+      <div><strong style="color:var(--ink)">Hoy — App de ruido blanco para el cuarto de la abuela.</strong> El Coway está en el cuarto de papá y mamá. Para la siesta, la abuela usa el teléfono con la app <em>White Noise Baby</em> o <em>Calm</em> — opción "lluvia suave" o "ventilador". Mismo sonido siempre.</div>
+    </li>
+    <li>
+      <div class="check-icon check-week">🛏️</div>
+      <div><strong style="color:var(--ink)">Esta semana — Linenspa 8" Hybrid Twin en el toddler bed.</strong> Reemplaza el colchón del crib que no le gusta. La toddler bed ya está a nivel del piso — perfecta para la transición. Las sábanas de bambú van encima.</div>
+    </li>
+    <li>
+      <div class="check-icon check-week">🌿</div>
+      <div><strong style="color:var(--ink)">Esta semana — Sábanas de bambú twin.</strong> Bambú absorbe la humedad del sudor y la libera al aire. Bedsure Bamboo o CGK Unlimited Bamboo, certificación OEKO-TEX, $25–35 en Amazon.</div>
+    </li>
+    <li>
+      <div class="check-icon check-week">🪆</div>
+      <div><strong style="color:var(--ink)">Esta semana — Nido de cojines alrededor de la toddler bed.</strong> Contención física sin calor extra. Rodear la cama con cojines medianos firmes para que sienta límites cuando se mueve. Reemplaza el abrazo como señal física.</div>
+    </li>
+    <li>
+      <div class="check-icon check-later">🪟</div>
+      <div><strong style="color:var(--ink)">Cuarto de abuela — Sábana oscura temporal en la ventana.</strong> No tiene cortinas blackout. Una sábana oscura pegada con cinta de pintor al marco funciona perfectamente para la siesta mientras consiguen cortinas para ese cuarto.</div>
+    </li>
+  </ul>
+
+  <h3 style="font-family:var(--font-display);font-size:1.1rem;margin:2rem 0 .6rem;color:var(--ink)">Paso 2 — El ritual sagrado de sueño</h3>
+  <p style="font-size:.88rem;color:var(--ink-soft);margin-bottom:1rem">Mismo orden. Todas las noches. Sin excepciones. El cerebro del niño necesita la secuencia predecible para activar la respuesta de calma automáticamente.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:.7rem;margin:1rem 0">
+    <div style="background:var(--purple-bg);border-radius:var(--radius-sm);padding:.9rem;text-align:center">
+      <div style="font-size:1.4rem">🛁</div>
+      <div style="font-weight:600;font-size:.85rem;color:var(--purple-dark);margin:.3rem 0">7:00pm</div>
+      <div style="font-size:.78rem;color:var(--ink-soft)">Baño tibio<br><span style="font-size:.73rem">Baja temperatura corporal — señal de sueño</span></div>
+    </div>
+    <div style="background:var(--purple-bg);border-radius:var(--radius-sm);padding:.9rem;text-align:center">
+      <div style="font-size:1.4rem">👕</div>
+      <div style="font-weight:600;font-size:.85rem;color:var(--purple-dark);margin:.3rem 0">7:15pm</div>
+      <div style="font-size:.78rem;color:var(--ink-soft)">Pijama + dientes<br><span style="font-size:.73rem">Algodón fino — no poliéster</span></div>
+    </div>
+    <div style="background:var(--purple-bg);border-radius:var(--radius-sm);padding:.9rem;text-align:center">
+      <div style="font-size:1.4rem">📖</div>
+      <div style="font-weight:600;font-size:.85rem;color:var(--purple-dark);margin:.3rem 0">7:20pm</div>
+      <div style="font-size:.78rem;color:var(--ink-soft)">1 cuento en voz baja<br><span style="font-size:.73rem">El mismo si quiere — no negociar más</span></div>
+    </div>
+    <div style="background:var(--purple-bg);border-radius:var(--radius-sm);padding:.9rem;text-align:center">
+      <div style="font-size:1.4rem">🙏</div>
+      <div style="font-weight:600;font-size:.85rem;color:var(--purple-dark);margin:.3rem 0">7:28pm</div>
+      <div style="font-size:.78rem;color:var(--ink-soft)">Oración breve<br><span style="font-size:.73rem">30 seg. Las mismas palabras. Siempre.</span></div>
+    </div>
+    <div style="background:var(--purple-bg);border-radius:var(--radius-sm);padding:.9rem;text-align:center">
+      <div style="font-size:1.4rem">🌬️</div>
+      <div style="font-weight:600;font-size:.85rem;color:var(--purple-dark);margin:.3rem 0">7:30pm</div>
+      <div style="font-size:.78rem;color:var(--ink-soft)">Oscuridad + Coway<br><span style="font-size:.73rem">Luces apagadas, mismo nivel siempre</span></div>
+    </div>
+  </div>
+
+  <h3 style="font-family:var(--font-display);font-size:1.1rem;margin:2rem 0 .6rem;color:var(--ink)">Paso 3 — Plan de retirada gradual (10 semanas)</h3>
+  <p style="font-size:.88rem;color:var(--ink-soft);margin-bottom:1.2rem">Cada fase dura 5–7 días. Regresión: retrocede UN paso, nunca al principio. Las noches 2 y 3 de cada fase son las más difíciles — si aguantan esas, el cambio ocurre.</p>
+
+  <div class="week-timeline">
+    <div class="timeline-week">
+      <div class="tl-badge">
+        <div class="tl-num" style="background:var(--teal-mid)">S1–2</div>
+        <div class="tl-label">Semanas<br>1–2</div>
+        <div class="tl-line"></div>
+      </div>
+      <div class="tl-card">
+        <div class="tl-title">El adulto se acuesta — se va cuando el niño cierra los ojos</div>
+        <div class="tl-body">Ritual completo. El adulto se acuesta en la toddler bed junto al niño. Cuando el niño cierra los ojos, espera 2–3 minutos y se levanta en silencio hacia su propio colchón. Si el niño protesta, responde con voz tranquila desde ahí: "Aquí estoy, todo bien." No vuelve a la toddler bed.</div>
+        <div class="tl-tip">💡 Siesta con abuela (cama alta): ella se sienta en una silla pegada a la cama desde el primer día — no puede acostarse con él en la cama alta como señal de transición. Mano en su espalda brevemente, luego se retira la mano pero sigue sentada.</div>
+      </div>
+    </div>
+    <div class="timeline-week">
+      <div class="tl-badge">
+        <div class="tl-num" style="background:var(--blue-mid)">S3–4</div>
+        <div class="tl-label">Semanas<br>3–4</div>
+        <div class="tl-line"></div>
+      </div>
+      <div class="tl-card">
+        <div class="tl-title">El adulto se sienta — ya no se acuesta</div>
+        <div class="tl-body">Ya no se acuesta. Se sienta en el borde de la toddler bed o en una silla al lado. Puede poner la mano en la espalda brevemente. Cuando el niño se duerme, el adulto se va a su propio colchón. Si el niño pide que se acueste: "Aquí estoy sentado, eso es suficiente."</div>
+        <div class="tl-tip">💡 El niño va a pedir insistentemente que se acuesten. Eso es normal y esperado. Sostener la nueva postura con calma — sin enojo, sin drama, voz tranquila.</div>
+      </div>
+    </div>
+    <div class="timeline-week">
+      <div class="tl-badge">
+        <div class="tl-num" style="background:var(--coral-mid)">S5–6</div>
+        <div class="tl-label">Semanas<br>5–6</div>
+        <div class="tl-line"></div>
+      </div>
+      <div class="tl-card">
+        <div class="tl-title">Silla al lado — sin contacto físico</div>
+        <div class="tl-body">Una silla al lado de la toddler bed. El adulto está presente pero sin tocar. Solo presencia y voz tranquila si el niño se activa. La silla empieza pegada a la cama y se mueve 30 cm más lejos cada 2 días hacia la pared.</div>
+        <div class="tl-tip">💡 Abuela en la siesta: ya está en silla desde el inicio — en esta fase empieza a alejarla gradualmente de la cama alta también.</div>
+      </div>
+    </div>
+    <div class="timeline-week">
+      <div class="tl-badge">
+        <div class="tl-num" style="background:var(--purple-mid)">S7–8</div>
+        <div class="tl-label">Semanas<br>7–8</div>
+        <div class="tl-line"></div>
+      </div>
+      <div class="tl-card">
+        <div class="tl-title">La silla llega a la pared del cuarto</div>
+        <div class="tl-body">El adulto está en el mismo cuarto pero lejos. El niño sabe que está ahí — esa seguridad es suficiente para la mayoría. Responder verbalmente si el niño llama: "Aquí estoy." Sin moverse hacia él salvo que sea necesario.</div>
+        <div class="tl-tip">💡 En este punto la mayoría de niños ya se duermen solos la mayor parte de las noches.</div>
+      </div>
+    </div>
+    <div class="timeline-week">
+      <div class="tl-badge">
+        <div class="tl-num" style="background:var(--amber)">S9–10</div>
+        <div class="tl-label">Semanas<br>9–10</div>
+      </div>
+      <div class="tl-card">
+        <div class="tl-title">El adulto sale después del ritual</div>
+        <div class="tl-body">Ritual completo, oración, "buenas noches te quiero" — y el adulto sale. Si el niño llama, responder desde afuera con voz tranquila. Entrar solo si el llanto escala a angustia real (sube y no baja en 10 min). Protesta normal baja y decrece sola.</div>
+        <div class="tl-tip">🎉 Meta alcanzada. El niño tiene una nueva asociación de sueño que él controla.</div>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="font-family:var(--font-display);font-size:1.1rem;margin:2rem 0 .8rem;color:var(--ink)">Instrucciones por adulto — los tres alineados</h3>
+  <p style="font-size:.88rem;color:var(--ink-soft);margin-bottom:1rem">Si uno cede, el proceso se reinicia. Los tres en la misma fase al mismo tiempo.</p>
+
+  <div class="adult-grid">
+    <div class="adult-card abuela">
+      <div class="adult-who teal">Abuela — Siesta en su cuarto</div>
+      <div style="font-family:var(--font-display);font-size:.95rem;font-weight:600;color:var(--ink)">Protocolo cama alta</div>
+      <ul class="adult-rules">
+        <li>Sábana oscura tapando la ventana antes de cada siesta</li>
+        <li>App de ruido blanco en el teléfono — opción lluvia suave o ventilador, mismo sonido siempre</li>
+        <li>Desde el día 1: sentada en silla junto a la cama, no acostada con él — la cama alta hace esto natural</li>
+        <li>Mano en su espalda los primeros días — luego solo presencia sentada</li>
+        <li>Sigue el mismo paso que papá y mamá hacen de noche — coordinar semanalmente</li>
+        <li>Si protesta: voz tranquila desde la silla. "Aquí estoy, ya." Sin levantarse a la cama.</li>
+      </ul>
+    </div>
+    <div class="adult-card mama">
+      <div class="adult-who coral">Mamá — Noche</div>
+      <div style="font-family:var(--font-display);font-size:.95rem;font-weight:600;color:var(--ink)">Protocolo toddler bed</div>
+      <ul class="adult-rules">
+        <li>El ritual es tuyo los días que papá trabaja tarde — mismo orden siempre</li>
+        <li>Comunica a papá qué tal estuvo la noche para no retroceder de fase</li>
+        <li>Si el niño se despierta de noche, responder primero con voz desde tu colchón</li>
+        <li>No negociar el número de cuentos — uno siempre, sin excepciones</li>
+        <li>Hablar español en el ritual — es el idioma emocional del sueño de él</li>
+      </ul>
+    </div>
+    <div class="adult-card papa">
+      <div class="adult-who blue">Papá — Noche</div>
+      <div style="font-family:var(--font-display);font-size:.95rem;font-weight:600;color:var(--ink)">Protocolo toddler bed</div>
+      <ul class="adult-rules">
+        <li>Coway encendido 10 minutos antes de iniciar el ritual</li>
+        <li>El baño puede ser de papá — momento de conexión en inglés</li>
+        <li>No ceder en noches 2 y 3 de cada fase — son las más críticas</li>
+        <li>Si el niño sale de la toddler bed, regresarlo en silencio sin drama ni negociación</li>
+        <li>Actualizar a la abuela cada semana — WhatsApp con el paso en que están</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout amber" style="margin-top:1.5rem">
+    <strong>La noche más difícil siempre es la 2 o la 3, no la 1.</strong>
+    La primera noche hay novedad. La segunda y tercera el niño prueba si el cambio es real. Si los adultos sostienen con calma — sin enojo, sin drama — generalmente en la noche 4 o 5 el niño empieza a ceder. Si ceden en la noche 2, el proceso se reinicia desde cero.
+  </div>
+
+  <div class="callout teal">
+    <strong>Lo que indica que está funcionando — no el tiempo para dormirse.</strong>
+    Busca: que esté más tranquilo en la toddler bed que la semana anterior. Que el llanto dure menos minutos. Que pida menos veces que el adulto se acueste. Esos son los indicadores reales de progreso.
+  </div>
+
+</section>
+
+<script>
+const activities = [
+  {day:1,who:"abuela",week:"semana-1",title:"Caja de texturas",duration:"15 min",body:"Llena una caja con arroz, frijoles, pasta seca y telas. Deja que el niño meta las manos. Di: \"¿Está suave o rasposo?\" Nombren juntos cada textura.",tag:"Lenguaje"},
+  {day:2,who:"papa",week:"semana-1",title:"Construcción con bloques",duration:"15 min",body:"Construyan una torre juntos. Cuenta cada bloque en voz alta: \"uno, dos, tres...\" Luego derrúmbala gritando \"¡se cayó!\" y repitan. Enseña causa y efecto.",tag:"Números"},
+  {day:3,who:"mama",week:"semana-1",title:"Masa de sal casera",duration:"20 min",body:"Mezcla harina, sal y agua. El niño amasa, aplasta y pellizca. Di: \"¡Qué fuerte eres! Mira cómo se estira.\" Guarda en bolsa zip hasta 3 días.",tag:"Motricidad fina"},
+  {day:4,who:"abuela",week:"semana-1",title:"Canciones con las manos",duration:"10 min",body:"Canta Arroz con leche, Cabeza hombros rodillas pies, o la canción que más recuerdes de tu infancia. El niño imitará tus movimientos. Repite la misma canción varias veces.",tag:"Música"},
+  {day:5,who:"familia",week:"semana-1",title:"Noche de cuento familiar",duration:"15 min",body:"Elijan un cuento juntos. Lean con voces distintas para cada personaje. El niño puede \"pasar\" las páginas. La abuela puede contar un cuento de memoria, sin libro.",tag:"Lenguaje"},
+  {day:6,who:"papa",week:"semana-1",title:"Paseo en el parque",duration:"30 min",body:"Caminen sin prisa. Señala cosas: \"¿Ves ese perro? ¿De qué color es?\" Coleccionen una hoja, una piedra, una ramita. Al llegar a casa, nómbrenle cada objeto.",tag:"Vocabulario"},
+  {day:7,who:"familia",week:"semana-1",title:"Desayuno con roles",duration:"20 min",body:"El niño \"ayuda\" a poner servilletas o cucharas en la mesa. Todos nombran lo que están comiendo. Dile: \"Cuéntale a la abuela qué desayunamos.\"",tag:"Rutina"},
+  {day:8,who:"abuela",week:"semana-2",title:"Olla y cuchara",duration:"10 min",body:"Dale al niño una olla y una cuchara de palo para que golpee al ritmo mientras tú cantas. Simple, ruidoso y delicioso para ellos. Desarrolla coordinación y memoria musical.",tag:"Ritmo"},
+  {day:9,who:"papa",week:"semana-2",title:"Circuito de obstáculos",duration:"20 min",body:"Con cojines, sillas y cajas: saltar de un cojín, pasar por debajo de una silla, rodear una caja. Tú modelas primero y animas: \"¡Tú puedes! ¡Salta!\" Repite 3-4 veces.",tag:"Motricidad gruesa"},
+  {day:10,who:"mama",week:"semana-2",title:"Pintura con esponja",duration:"20 min",body:"Esponjas de cocina cortadas, pintura lavable, papel grande en el piso. El niño estampa libremente. Nombra los colores. No corrijas el resultado — el proceso es el aprendizaje.",tag:"Arte"},
+  {day:11,who:"abuela",week:"semana-2",title:"Ayudante de la cocina",duration:"15 min",body:"Deja que el niño te ayude lavando verduras, revolviendo en un tazón, o poniendo ingredientes. Narra todo: \"Esto es tomate, está rojo.\" Conexión real a través del trabajo cotidiano.",tag:"Vida diaria"},
+  {day:12,who:"papa",week:"semana-2",title:"Pelota y canasta",duration:"15 min",body:"Una canasta en el piso, una pelota pequeña. Lanza y anota. Celebra cada intento, no solo los goles: \"¡Qué buen tiro!\" Enseña a no frustrarse con el error.",tag:"Coordinación"},
+  {day:13,who:"familia",week:"semana-2",title:"Baile familiar",duration:"10 min",body:"Pongan música que le guste a la abuela y al niño. Todos bailan sin coreografía. El niño imita movimientos. Terminen siempre con un abrazo grupal.",tag:"Vínculo"},
+  {day:14,who:"mama",week:"semana-2",title:"Clasificar por colores",duration:"15 min",body:"Calcetines, bloques o frutas de juguete. Separa por color y pide al niño que repita: \"Pon el rojo aquí.\" No corrijas bruscamente — guía con entusiasmo.",tag:"Colores y lógica"},
+  {day:15,who:"abuela",week:"semana-3",title:"Álbum familiar hablado",duration:"20 min",body:"Saca fotos familiares (físicas o en el teléfono). Señala personas: \"Este es tu papá cuando era chiquito.\" El niño aprende nombres de familiares y construye identidad.",tag:"Identidad"},
+  {day:16,who:"papa",week:"semana-3",title:"Sonidos de animales",duration:"15 min",body:"Tú haces el sonido, el niño adivina el animal. Luego al revés. Pueden usar tarjetas o buscar fotos en el teléfono. Exagera los sonidos para que sea más divertido.",tag:"Vocabulario"},
+  {day:17,who:"mama",week:"semana-3",title:"Cuento inventado juntos",duration:"15 min",body:"Empieza: \"Había una vez un niño que se llamaba...\" y espera que el niño complete. No importa si es incoherente. Valida cada aportación: \"¡Qué buena idea!\"",tag:"Narración"},
+  {day:18,who:"abuela",week:"semana-3",title:"Juego del ¿Dónde está?",duration:"10 min",body:"Esconde un objeto bajo una tela o taza. \"¿Dónde está el osito?\" El niño busca. Luego el niño esconde para que tú busques. Enseña vocabulario de ubicación: arriba, abajo, adentro.",tag:"Cognición"},
+  {day:19,who:"familia",week:"semana-3",title:"Video llamada familiar",duration:"15 min",body:"Llamen a un familiar que no ven seguido. El niño practica saludar, despedirse y decir su nombre. Modela cómo hablar: \"Dile hola al tío.\"",tag:"Social"},
+  {day:20,who:"papa",week:"semana-3",title:"Teatro de sombras",duration:"15 min",body:"Linterna en la oscuridad y manos que forman animales en la pared. Narra una historia simple. Luego muéstrale cómo hacer un conejo o pájaro con sus propias manos.",tag:"Imaginación"},
+  {day:21,who:"mama",week:"semana-3",title:"Libro de emociones",duration:"15 min",body:"Impriman o dibujen caras con distintas emociones: feliz, triste, enojado, asustado, sorprendido. Repásenlas haciendo las caras. Pregunta: \"¿Cómo te sientes tú ahora?\"",tag:"Emociones"},
+  {day:22,who:"abuela",week:"semana-4",title:"Jardinería sencilla",duration:"20 min",body:"Planten un frijol o semilla en un vaso con tierra. El niño mete la semilla y la riega. Dile: \"Todos los días la vamos a ver crecer.\" Seguimiento diario — paciencia y maravilla.",tag:"Naturaleza"},
+  {day:23,who:"papa",week:"semana-4",title:"Construcción con cajas",duration:"25 min",body:"Cajas de cereal, zapatos o paquetes. Construyan una casa o garaje. Pregunta: \"¿Por dónde entra la puerta?\" El niño decide. Él es el arquitecto.",tag:"Espacial"},
+  {day:24,who:"mama",week:"semana-4",title:"Estampar con frutas",duration:"20 min",body:"Corta una manzana o naranja a la mitad, moja en pintura, estampa en papel. El niño descubre la forma secreta adentro. Nombra formas y colores del resultado.",tag:"Arte y ciencia"},
+  {day:25,who:"abuela",week:"semana-4",title:"Cuento de la abuela",duration:"15 min",body:"Cuenta un cuento de memoria — de tu infancia, de un animal, inventado. Sin libro. Solo tu voz. El niño escucha, pregunta, interrumpe. Tu historia es el regalo más valioso.",tag:"Cultura"},
+  {day:26,who:"papa",week:"semana-4",title:"Agua y trasvasado",duration:"20 min",body:"Afuera o en la bañera: vasos, botellas y tazas de distintos tamaños. El niño vierte agua de un recipiente a otro. Comenta: \"Se llenó, se vació.\" El favorito de casi todos los niños.",tag:"Ciencia"},
+  {day:27,who:"mama",week:"semana-4",title:"Mapa de la casa",duration:"15 min",body:"Dibujen juntos un mapa simple de la casa. \"¿Dónde está tu cuarto? ¿Y la cocina?\" El niño señala y tú dibujas. Muéstrale el dibujo terminado y nómbrenle cada cuarto.",tag:"Espacial"},
+  {day:28,who:"abuela",week:"semana-4",title:"Juego de memoria visual",duration:"15 min",body:"Pon 4–6 objetos sobre la mesa. El niño los mira. Esconde uno bajo un trapo. \"¿Qué falta?\" El niño adivina. Empieza con 3 objetos. Aplaude el intento aunque no acierte.",tag:"Memoria"},
+  {day:29,who:"papa",week:"semana-4",title:"Circuito final",duration:"20 min",body:"La versión más desafiante del circuito de la semana 2. Dile: \"Ya eres más grande, mira lo que puedes hacer.\" El niño notará que puede más — primer aprendizaje del crecimiento personal.",tag:"Superación"},
+  {day:30,who:"familia",week:"semana-4",title:"Fiesta del mes",duration:"30 min",body:"Exhiban los trabajos del mes en la pared como una galería. Cada uno dice cuál fue su actividad favorita. Papá, mamá y abuela dicen algo que admiran del niño. Terminen con su postre favorito.",tag:"Celebración"},
+];
+
+const colorMap = {
+  abuela:{header:"teal",tag:"teal"},
+  papa:{header:"blue",tag:"blue"},
+  mama:{header:"coral",tag:"coral"},
+  familia:{header:"purple",tag:"purple"}
+};
+
+function buildCards(){
+  const container = document.getElementById("cards-container");
+  activities.forEach((a,i)=>{
+    const c = colorMap[a.who];
+    const card = document.createElement("div");
+    card.className = "card reveal";
+    card.dataset.who = a.who;
+    card.dataset.week = a.week;
+    card.style.animationDelay = (i%6)*0.06+"s";
+    card.innerHTML = `
+      <div class="card-header ${c.header}">
+        <div class="card-day">${a.day}</div>
+        <div class="card-title">${a.title}</div>
+        <div class="card-pills">
+          <span class="card-pill">${a.duration}</span>
+          <span class="card-pill">${labelFor(a.who)}</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-text">${a.body}</p>
+        <span class="card-tag ${c.tag}">${a.tag}</span>
+      </div>`;
+    container.appendChild(card);
+  });
+}
+
+function labelFor(who){
+  return {abuela:"Con abuela",papa:"Con papá",mama:"Con mamá",familia:"Toda la familia"}[who];
+}
+
+function filterCards(filter, btn){
+  document.querySelectorAll(".wf-btn").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  document.querySelectorAll(".card").forEach(c=>{
+    if(filter==="all"||c.dataset.who===filter||c.dataset.week===filter){
+      c.classList.remove("hidden");
+    } else {
+      c.classList.add("hidden");
+    }
+  });
+}
+
+function setTab(el, id){
+  document.querySelectorAll(".nav-tab").forEach(t=>t.classList.remove("active"));
+  el.classList.add("active");
+}
+
+// scroll spy
+const sections = ["actividades","bilingue","papa","terceridioma","mama","abuela","sueno"];
+window.addEventListener("scroll",()=>{
+  let current = sections[0];
+  sections.forEach(id=>{
+    const el = document.getElementById(id);
+    if(el && window.scrollY >= el.offsetTop - 100) current = id;
+  });
+  document.querySelectorAll(".nav-tab").forEach(t=>{
+    t.classList.toggle("active", t.getAttribute("href")==="#"+current);
+  });
+},{passive:true});
+
+buildCards();
+</script>
+</body>
+</html>
